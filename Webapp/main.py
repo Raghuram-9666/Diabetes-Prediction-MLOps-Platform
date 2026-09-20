@@ -9,7 +9,7 @@ from io import StringIO
 PREDICTION_API_URL = os.getenv("PREDICTION_API_URL", "http://localhost:8000/predict")
 PAST_PREDICTIONS_API_URL = os.getenv("PAST_PREDICTIONS_API_URL", "http://localhost:8000/past-predictions")
 
-st.title("ML-Based Diabetes Prediction App")
+st.title("Diabetes Prediction MLOps Platform")
 
 # Sidebar for navigation
 st.sidebar.header("Navigation")
