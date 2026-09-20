@@ -1,4 +1,4 @@
-# ML-Based-Diabetes-Prediction System
+# Diabetes Prediction MLOps Platform
 
 # Project Setup
 
@@ -50,7 +50,7 @@ Make sure you have the following installed on your machine:
 - Your Project Structure should look like this:
 
 ```bash
-DSP-ML-BASED-DIABETES-APP-PROJECT-G1/
+diabetes-prediction-mlops-platform/
 ├── airflow/
 │   ├── dags/
 │   │   ├── prediction_job.py
@@ -124,13 +124,26 @@ The `.gitignore` file in the project includes the following lines to ensure that
 - The Generated data for ingestion will store in `raw_data/` folder and cleaned data will strore `good_data/` folder.
 
 **`.env` File**:  
-- Create a `.env` file in the root directory by copying the contents of `.env.example`. Update the values in the `.env` file for your specific environment, such as database connection details.
+- Create a `.env` file in the root directory by copying `.env.example`.
+- Replace every placeholder with credentials that you create locally. Do not commit `.env` or publish its values.
 
 **Example `.env` file**  
 - After updating the `.env` file with your values, it should look something like this:
 
 ```dotenv
-DATABASE_URL=postgresql://postgres:your_password@db:5432/diabetes_predictions
+POSTGRES_USER=your_postgres_user
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_DB=diabetes_predictions
+DATABASE_URL=postgresql://your_postgres_user:your_postgres_password@db:5432/diabetes_predictions
+AIRFLOW_DB_USER=your_airflow_db_user
+AIRFLOW_DB_PASSWORD=your_airflow_db_password
+AIRFLOW_DB_NAME=airflow
+PGADMIN_DEFAULT_EMAIL=your_pgadmin_email
+PGADMIN_DEFAULT_PASSWORD=your_pgadmin_password
+GF_SECURITY_ADMIN_USER=your_grafana_user
+GF_SECURITY_ADMIN_PASSWORD=your_grafana_password
+_AIRFLOW_WWW_USER_USERNAME=your_airflow_user
+_AIRFLOW_WWW_USER_PASSWORD=your_airflow_password
 AIRFLOW_UID=50000
 ```
 
@@ -140,23 +153,23 @@ AIRFLOW_UID=50000
 ## Step 2: Clone the Repository
 
 ```bash
-git clone https://github.com/Prasanna38430/ML-Based-Daibetes-Prediction-System.git
-cd ML-Based-Daibetes-Prediction-System
+git clone https://github.com/<Raghuram-9666>/diabetes-prediction-mlops-platform.git
+cd diabetes-prediction-mlops-platform
 ```
 
 ## Step 3:  Start Services with Docker Compose
-1. Add your Data Base Credentials to Fastapi database service in **docker-Compose.yml** file.
+1. Create the local `.env` file described above and use your own database credentials.
 
 ```bash
 docker-compose up --build
 ```
 This will start the following services:
-- **Airflow Webserver:** `http://localhost:8080` (Login with `airflow / airflow`)
+- **Airflow Webserver:** `http://localhost:8080` (Login with the values of `_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD`)
 - **FastAPI API:** `http://localhost:8000`
 - **Streamlit Webapp:** `http://localhost:8501`
-- **Grafana Dashboard:** `http://localhost:3001` (Login with `dsp / project`)
+- **Grafana Dashboard:** `http://localhost:3001` (Login with the values of `GF_SECURITY_ADMIN_USER` and `GF_SECURITY_ADMIN_PASSWORD`)
 - **Great Expectations Data Docs (via nginx):** `http://localhost:8085`
-- **PGAdmin (Postgres GUI):** `http://localhost:5050` (Login with `admin@example.com / project`)
+- **PGAdmin (Postgres GUI):** `http://localhost:5050` (Login with the values of `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD`)
 
 ---
 
@@ -196,12 +209,12 @@ docker-compose restart < database Container id or name >
 4. **Access pgAdmin**
    1. Open `http://localhost:5050` in your browser.
    2. Login with:
-      - **Email**: `admin@example.com`
-      - **Password**: `project`
+      - **Email**: Your `PGADMIN_DEFAULT_EMAIL` value
+      - **Password**: Your `PGADMIN_DEFAULT_PASSWORD` value
    3. Add a new server:
       - Host: `db`
-      - Username: `your_user_name`
-      - Password: `your_passowrd`
+      - Username: Your `POSTGRES_USER` value
+      - Password: Your `POSTGRES_PASSWORD` value
    4. Create data base for tracking files 
 
    ```sh
@@ -308,14 +321,14 @@ By following above steps, you will have successfully set up your PostgreSQL conn
 Grafana is pre-configured via `docker-compose.yml` — no manual installation required.
 
 - **URL**: [http://localhost:3001](http://localhost:3001)  
-- **Username**: `dsp`  
-- **Password**: `project`
+- **Username**: Your `GF_SECURITY_ADMIN_USER` value
+- **Password**: Your `GF_SECURITY_ADMIN_PASSWORD` value
 
 
 ## Step 8: Running Airflow DAGs
 - Enable and trigger the `diabetes_ingestion_dag` and `prediction_job` dags.
 
-✅ By following the above steps, you will have successfully set up the **Diabetes ML Prediction System** with automated data validation, real-time monitoring, and user-friendly prediction interfaces.
+✅ By following the above steps, you will have successfully set up the **Diabetes Prediction MLOps Platform** with automated data validation, real-time monitoring, and user-friendly prediction interfaces.
 
 
 
